@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1= title
+  canvas#the-canvas(width=960, height=540)
+  script(type='text/javascript', src="/socket.io/socket.io.js")
+  script(type='text/javascript', src='/javascripts/tweet-painter.js')
+  script(type='text/javascript', src='/javascripts/wall.js')

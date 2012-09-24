@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tweet wall test</title>
+</head>
+<body>
+  <canvas id="the-canvas" width="960" height="540">
+  </canvas>
+  <script type="text/javascript" src="../lib/tweet-painter.js"></script>
+  <script type="text/javascript" src="/javascripts/application.js"></script>
+  <script type="text/javascript">
+
+
+  (function init() {
+    var canvas = document.getElementById('the-canvas');
+    var painter = new TweetPainter.Painter(canvas);
+
+    function paint(time) {
+      painter.paint(time);
+      window.requestAnimationFrame(paint);
+    }
+
+    function dataGenerator() {
+      var time = new Date().toString();
+
+      painter.addToQueue({
+        text: 'Blah blah blah',
+        created_at: time,
+        retweeted: false,
+        user: {
+          profile_image_url_https: 'https://si0.twimg.com/profile_images/2407639998/image_normal.jpg',
+          profile_image_url: 'http://a0.twimg.com/profile_images/2407639998/image_normal.jpg',
+          created_at: 'Fri Sep 21 20:51:55 +0000 2012',
+          screen_name: 'caseycapachi',
+          name: 'Casey Capachi'
+        }
+      });
+
+      setTimeout(dataGenerator, Math.random() * 1000);
+    }
+
+    dataGenerator();
+    paint();
+  })();
+
+  </script>
+</body>
+</html>

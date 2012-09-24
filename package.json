@@ -1,0 +1,35 @@
+{
+  "name": "tweetwall",
+  "description" : "LXJS Tweet wall.",
+  "author" : "Luis Reis <luis.m.reis@gmail.com>",
+  "contributors" : [],
+  "version": "0.0.1",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/luismreis/lxjs-tweetwall/master/LICENSE"
+    }
+  ],
+  "repository" :
+    {
+      "type": "git",
+      "url": "https://github.com/luismreis/tweetwall.git"
+    },
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "ntwitter": "*",
+    "express": "3.0.0rc4",
+    "jade": "*",
+    "less-middleware": "*",
+    "socket.io": "*"
+  },
+  "devDependencies": {
+    "tap": "*",
+    "jslint": "*"
+  },
+  "engines": {
+    "node": "~0.8"
+  }
+}
