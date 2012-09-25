@@ -50,7 +50,42 @@ io.sockets.on('connection', function (socket) {
   // });
 });
 
+var wall = null;
+var animationHandle = null;
 
+if (true) {
+  var Canvas = require('openvg-canvas');
+  var canvas = new Canvas(1920, 1080);
+  var Painter = require('./lib/tweet-painter').Painter;
+  var ImageFetcher = require('./lib/image-fetcher');
+
+  wall = new Painter(canvas, { imageFetcher: ImageFetcher });
+  (function animloop(time) {
+    animationHandle = requestAnimationFrame(animloop);
+    wall.paint(time);
+  })();
+}
+
+function logTweet(emitter) {
+  return function (tweet) {
+    console.log(tweet.text);
+    emitter(tweet);
+  }
+}
+
+function addToWall(emitter) {
+  return function (tweet) {
+    wall.addToQueue(tweet);
+    emitter(tweet);
+  }
+}
+
+function sendTweet(emitter) {
+  return function (tweet) {
+    io.sockets.emit('tweet', tweet);
+    emitter(tweet);
+  }
+}
 
 fs.readFile('config.json', function (err, data) {
   if (err) {
@@ -59,10 +94,12 @@ fs.readFile('config.json', function (err, data) {
     return;
   }
 
+  var emitter = function (tweet) {};
+  emitter = sendTweet(emitter);
+  if (wall !== null) { emitter = addToWall(emitter); }
+  emitter = logTweet(emitter);
+
   console.log('Passing data to TwitterStream');
-  TwitterStream.streamTweets(JSON.parse(data), function(data) {
-    console.log(data.text);
-    io.sockets.emit('tweet', data);
-  });
+  TwitterStream.streamTweets(JSON.parse(data), emitter);
 });
 
