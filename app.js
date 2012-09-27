@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/*jslint indent: 2 */
+/*jslint indent: 2, node: true */
 
 "use strict";
 
@@ -58,8 +58,15 @@ if (true) {
   var canvas = new Canvas(1920, 1080);
   var Painter = require('./lib/tweet-painter').Painter;
   var ImageManager = require('./lib/image-manager');
+  var Encoder = require('node-html-encoder').Encoder;
+  var encoder = new Encoder('entity');
 
-  wall = new Painter(canvas, { imageManager: new ImageManager() });
+  wall = new Painter(canvas, {
+      imageManager: new ImageManager(),
+      htmlUnencode: function (text) {
+        return encoder.htmlDecode(text);
+      }
+    });
   (function animloop(time) {
     animationHandle = requestAnimationFrame(animloop);
     wall.paint(time);

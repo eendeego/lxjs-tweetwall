@@ -24,7 +24,8 @@
     "jade": "*",
     "less-middleware": "*",
     "socket.io": "*",
-    "openvg-canvas" : "https://github.com/luismreis/node-openvg-canvas/tarball/master"
+    "openvg-canvas" : "https://github.com/luismreis/node-openvg-canvas/tarball/master",
+    "node-html-encoder" : "*"
   },
   "devDependencies": {
     "tap": "*",
