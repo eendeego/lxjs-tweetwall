@@ -57,9 +57,9 @@ if (true) {
   var Canvas = require('openvg-canvas');
   var canvas = new Canvas(1920, 1080);
   var Painter = require('./lib/tweet-painter').Painter;
-  var ImageFetcher = require('./lib/image-fetcher');
+  var ImageManager = require('./lib/image-manager');
 
-  wall = new Painter(canvas, { imageFetcher: ImageFetcher });
+  wall = new Painter(canvas, { imageManager: new ImageManager() });
   (function animloop(time) {
     animationHandle = requestAnimationFrame(animloop);
     wall.paint(time);
