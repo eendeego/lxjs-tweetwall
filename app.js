@@ -104,7 +104,7 @@ fs.readFile('config.json', function (err, data) {
   var emitter = function (tweet) {};
   emitter = sendTweet(emitter);
   if (wall !== null) { emitter = addToWall(emitter); }
-  emitter = logTweet(emitter);
+  // emitter = logTweet(emitter);
 
   console.log('Passing data to TwitterStream');
   TwitterStream.streamTweets(JSON.parse(data), emitter);
