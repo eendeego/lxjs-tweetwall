@@ -14,6 +14,10 @@ var express = require('express')
   , path = require('path')
   , socket_io = require('socket.io');
 
+process.on('uncaughtException', function (err) {
+  console.log("Caught exception: " + err.message + "\n" + err.stack);
+});
+
 var app = express();
 
 app.configure(function(){
