@@ -7,12 +7,12 @@ var util = require('util');
 var fs = require('fs');
 var TwitterStream = require('./lib/twitter-stream');
 
-var express = require('express')
-  , routes = require('./routes')
-  , wall = require('./routes/wall')
-  , http = require('http')
-  , path = require('path')
-  , socket_io = require('socket.io');
+var express = require('express'),
+    routes = require('./routes'),
+    wall = require('./routes/wall'),
+    http = require('http'),
+    path = require('path'),
+    socket_io = require('socket.io');
 
 process.on('uncaughtException', function (err) {
   console.log("Caught exception: " + err.message + "\n" + err.stack);
@@ -20,7 +20,7 @@ process.on('uncaughtException', function (err) {
 
 var app = express();
 
-app.configure(function(){
+app.configure(function () {
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -33,7 +33,7 @@ app.configure(function(){
   app.use(express.static(path.join(__dirname, 'public')));
 });
 
-app.configure('development', function(){
+app.configure('development', function () {
   app.use(express.errorHandler());
 });
 
@@ -43,7 +43,7 @@ app.get('/wall', wall.index);
 var server = require('http').createServer(app);
 var io = socket_io.listen(server);
 
-server.listen(app.get('port'), function(){
+server.listen(app.get('port'), function () {
   console.log("Express server listening on port " + app.get('port'));
 });
 
@@ -81,21 +81,21 @@ function logTweet(emitter) {
   return function (tweet) {
     console.log(tweet.text);
     emitter(tweet);
-  }
+  };
 }
 
 function addToWall(emitter) {
   return function (tweet) {
     wall.addToQueue(tweet);
     emitter(tweet);
-  }
+  };
 }
 
 function sendTweet(emitter) {
   return function (tweet) {
     io.sockets.emit('tweet', tweet);
     emitter(tweet);
-  }
+  };
 }
 
 fs.readFile('config.json', function (err, data) {
@@ -113,4 +113,3 @@ fs.readFile('config.json', function (err, data) {
   console.log('Passing data to TwitterStream');
   TwitterStream.streamTweets(JSON.parse(data), emitter);
 });
-
